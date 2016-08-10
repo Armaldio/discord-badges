@@ -6,9 +6,9 @@ A web server that generates badges based on Discord servers, using [shields.io](
 
 Type | Example | URL
 -----|---------|----
-Generic | ![Generic](http://geo1088.noip.me/badge/discord) | `/badge/discord`
-Online server members | ![Online count](http://geo1088.noip.me/badge/discord/online/181962633522446336) | `/badge/discord/online/<server id>`
-Online members w/ custom title | ![](http://geo1088.noip.me/badge/discord/online/181962633522446336/my server title) | `/badge/discord/online/<server_id>/<title>`
+Generic | ![Generic](http://discord-badges.ddns.net/badge/discord) | `/badge/discord`
+Online server members | ![Online count](http://discord-badges.ddns.net/badge/discord/online/181962633522446336) | `/badge/discord/online/<server id>`
+Online members w/ custom title | ![](http://discord-badges.ddns.net/badge/discord/online/181962633522446336/my server title) | `/badge/discord/online/<server_id>/<title>`
 
 ## Other properties
 
@@ -22,9 +22,10 @@ Name | Description
 
 ## Built-in icons
 
-Currently, only 1 icon is supported: `?icon=1` ![](http://geo1088.noip.me/badge/discord?icon=1)
+Currently, only 1 icon is supported: `?icon=1` ![](http://discord-badges.ddns.net/badge/discord?icon=1)
 
 # Other random notes
 
 - The `static/` folder contains a `.json` file with URL-encoded data URLs for each PNG inside. The keys of the JSON file match the name of the PNG file it's associated with, but the PNGs themselves are never featured in the code. They're just the decoded version that I work with when making changes.
 - In order to use the "online members" badges for your server, you must enable the widget from the server's server settings (Server settings > Widget > Enable widget). If it's not (or if a bad server ID is specified), the server will produce the generic server badge as a fallback.
+- Currently running on `discord-badges.ddns.net`, try it out there! **Note that this location is subject to change.**
