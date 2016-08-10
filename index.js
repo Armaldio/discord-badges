@@ -7,31 +7,36 @@ let assets = require("./static/assets.json"); // stores icons in url-encoded dat
 app.use(express.static('static'));
 
 // Generic function for constructing a badge
-function badge(options) {
+function badge(options, req, res) {
     // Format for URL
     left = options.left.replace("-", "--").replace("_", "__");
     right = options.right.replace("-", "--").replace("_", "__");
     // If no custom color is there, use Discord's blurple
-    if (!options.color) options.color = "7289DA";
-    // icon will be an identifier, let's confert it into a data URL
-    switch (options.icon) {
+    var color = req.query.color || "7289DA";
+    // icon will be an identifier, let's convert it into a data URL
+    var icon = req.query.icon || "";
+    switch (icon) {
         case "1": // No border, just the controller part
-            options.icon = assets.iconWhiteShadow;
+            icon = assets.iconWhiteShadow;
             break;
         // No default - If there's no match, assume it's a Base64 string to be used as a custom icon
     }
     // Construct
-    url = `https://img.shields.io/badge/${options.left}-${options.right}-${options.color}.svg`
+    var url = `https://img.shields.io/badge/${left}-${right}-${color}.svg`;
     let paramsPart = "?";
     // If an icon is there, use it
-    if (options.icon) paramsPart += "logo="+options.icon+"&";
+    if (icon) paramsPart += "logo="+icon+"&";
     // If there's a style set, pass that along as well
-    if (options.style) paramsPart +="style="+options.style+"&";
     paramsPart = paramsPart.replace(/\&$/, "");
     if (paramsPart === "?") paramsPart = "";
     url += paramsPart;
 
-    return url;
+    request(url, (err, response, body) => {
+        if (!err && response.statusCode === 200) {
+            res.set("Content-Type", "image/svg+xml");
+            res.send(body);
+        }
+    });
 }
 
 // Get total online users from a Discord server
@@ -53,13 +58,10 @@ function getOnlineUsers(serverId, callback) {
 
 // Generic "chat on Discord"
 app.get("/badge/discord", (req, res) => {
-    res.redirect(badge({
+    badge({
         left: "chat",
-        right: "on Discord",
-        color: req.query.color,
-        icon: req.query.icon,
-        style: req.query.style
-    }));
+        right: "on Discord"
+    }, req, res);
 });
 
 // "Discord server" on the left, online users on the right
@@ -70,13 +72,10 @@ app.get("/badge/discord/online/:serverId", (req, res) => {
         // Error means the person doesn't have widgets enabled for their server, fallback to generic
         if (err) res.redirect("/badge/discord");
         // Otherwise, send a badge with the data requested
-        res.redirect(badge({
+        badge({
             left: "Discord server",
-            right: `${amount} online`,
-            color: req.query.color,
-            icon: req.query.icon,
-            style: req.query.style
-        }));
+            right: `${amount} online`
+        }, req, res);
     });
 });
 
@@ -86,17 +85,20 @@ app.get("/badge/discord/online/:serverId/:displayName", (req, res) => {
     let displayName = req.params.displayName; // What to show on the right side
 
     getOnlineUsers(serverId, (err, amount) => {
-        // Error means the person doesn't have widgets enabled for their server, fallback to generic
-        if (err) res.redirect("/badge/discord");
-        // Otherwise, send a badge with the data requested
-        res.redirect(badge({
-            left: displayName,
-            right: `${amount} online`,
-            color: req.query.color,
-            icon: req.query.icon,
-            style: req.query.style
-        }));
+        if (err) {
+            // Error means the person doesn't have widgets enabled for their server, fallback to generic
+            badge({
+                left: "chat",
+                right: "on Discord"
+            }, req, res);
+        } else {
+            // Otherwise, send a badge with the data requested
+            badge({
+                left: displayName,
+                right: `${amount} online`
+            }, req, res);
+        }
     });
 });
 
-app.listen(80);
+app.listen(3000);
