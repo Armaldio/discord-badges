@@ -101,4 +101,4 @@ app.get("/badge/discord/online/:serverId/:displayName", (req, res) => {
     });
 });
 
-app.listen(3000);
+app.listen(80);
