@@ -7,8 +7,8 @@ A web server that generates badges based on Discord servers, using [shields.io](
 Type | Example | URL
 -----|---------|----
 Generic | ![Generic](http://discord-badges.ddns.net/badge/discord) | `/badge/discord`
-Online server members | ![Online count](http://discord-badges.ddns.net/badge/discord/online/181962633522446336) | `/badge/discord/online/<server id>`
-Online members w/ custom title | ![](http://discord-badges.ddns.net/badge/discord/online/181962633522446336/my server title) | `/badge/discord/online/<server_id>/<title>`
+Online server members | ![Online count](http://discord-badges.ddns.net/badge/discord/online/136501988941758464) | `/badge/discord/online/<server id>`
+Online members w/ custom title | ![](http://discord-badges.ddns.net/badge/discord/online/136501988941758464/custom server title) | `/badge/discord/online/<server_id>/<title>`
 
 ## Other properties
 
@@ -22,7 +22,7 @@ Name | Description
 
 ## Built-in icons
 
-Currently, only 1 icon is supported: `?icon=1` ![](http://discord-badges.ddns.net/badge/discord?icon=1)
+Currently, only 1 icon is supported: `?icon=1` ![](http://discord-badges.ddns.net/badge/discord/online/136501988941758464?icon=1)
 
 # Other random notes
 
