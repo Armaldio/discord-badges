@@ -28,4 +28,4 @@ Currently, only 1 icon is supported: `?icon=1` ![](http://discord-badges.ddns.ne
 
 - The `static/` folder contains a `.json` file with URL-encoded data URLs for each PNG inside. The keys of the JSON file match the name of the PNG file it's associated with, but the PNGs themselves are never featured in the code. They're just the decoded version that I work with when making changes.
 - In order to use the "online members" badges for your server, you must enable the widget from the server's server settings (Server settings > Widget > Enable widget). If it's not (or if a bad server ID is specified), the server will produce the generic server badge as a fallback.
-- Currently running on `discord-badges.ddns.net`, try it out there! **Note that this location is subject to change.**
+- Currently running on `discord-badges.ddns.net`, [try it out there](http://discord-badges.ddns.net/badge/discord)! **Note that this location is subject to change.**
