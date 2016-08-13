@@ -69,13 +69,16 @@ app.get("/badge/discord/online/:serverId", (req, res) => {
     let serverId = req.params.serverId; // The server ID to get members from
 
     getOnlineUsers(serverId, (err, amount) => {
-        // Error means the person doesn't have widgets enabled for their server, fallback to generic
-        if (err) res.redirect("/badge/discord");
-        // Otherwise, send a badge with the data requested
-        badge({
-            left: "Discord server",
-            right: `${amount} online`
-        }, req, res);
+        if (err) {
+            // Error means the person doesn't have widgets enabled for their server, fallback to generic
+            res.redirect("/badge/discord");
+        } else {
+            // Otherwise, send a badge with the data requested
+            badge({
+                left: "Discord server",
+                right: `${amount} online`
+            }, req, res);
+        }
     });
 });
 
